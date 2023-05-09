@@ -1,12 +1,13 @@
 package ru.matushov.srpingcourser.FirstRestApp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.matushov.srpingcourser.FirstRestApp.models.Person;
 import ru.matushov.srpingcourser.FirstRestApp.services.PeopleService;
+import ru.matushov.srpingcourser.FirstRestApp.util.PersonErrorResponse;
+import ru.matushov.srpingcourser.FirstRestApp.util.PersonNotFoundException;
 
 import java.util.List;
 
@@ -29,5 +30,17 @@ public class PeopleController {
     @GetMapping("/{id}")
     public Person getPerson(@PathVariable("id") int id){
         return peopleService.findOne(id); //Jackson convert one object to JSON
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<PersonErrorResponse> handleException(PersonNotFoundException e) {
+        PersonErrorResponse response = new PersonErrorResponse(
+                "Person with this id wasn't found!",
+                System.currentTimeMillis()
+        );
+
+        //In HTTP Response (response) and status in header
+        return new ResponseEntity<>(response , HttpStatus.NOT_FOUND); //NOT_FOUND - 404
+
     }
 }
