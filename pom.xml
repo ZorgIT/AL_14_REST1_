@@ -12,7 +12,7 @@
 	<artifactId>FirstRestApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>FirstRestApp</name>
-	<description>Frirst REST application. Alishev course</description>
+	<description>First REST application. Alishev course</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -47,6 +47,14 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>8.0.0.Final</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.1.1</version>
+		</dependency>
+
 
 	</dependencies>
 

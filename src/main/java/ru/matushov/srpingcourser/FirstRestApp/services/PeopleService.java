@@ -7,6 +7,7 @@ import ru.matushov.srpingcourser.FirstRestApp.models.Person;
 import ru.matushov.srpingcourser.FirstRestApp.repositories.PeopleRepository;
 import ru.matushov.srpingcourser.FirstRestApp.util.PersonNotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ public class PeopleService {
     public List<Person> findAll() {
         return peopleRepository.findAll();
     }
+
     public Person findOne(int id) {
         Optional<Person> foundPerson = peopleRepository.findById(id);
         return foundPerson.orElseThrow(PersonNotFoundException::new);
@@ -32,6 +34,13 @@ public class PeopleService {
 
     @Transactional
     public void save(Person person) {
+        enrichPerson(person);
         peopleRepository.save(person);
+    }
+
+    private void enrichPerson(Person person) {
+        person.setCreatedAt(LocalDateTime.now());
+        person.setUpdatedAt(LocalDateTime.now());
+        person.setCreatedWho("ADMIN"); //In real project here some logic
     }
 }
